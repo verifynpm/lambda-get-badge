@@ -11,5 +11,17 @@ install:
 test:
   - npm t
 script:
-  - npm run tag-build
   - npm run zip
+deploy:
+  on:
+    branch: master
+  provider: lambda
+  function_name: verifynpm-get-badge
+  zip: "./compiled/bundle.zip"
+  region: us-east-2
+  role: arn:aws:iam::541605000355:role/lambda_code_deploy
+  runtime: nodejs8.10
+  handler_name: handler
+  access_key_id: AKIAJIOMAZIG6DL7U76A
+  secret_access_key:
+    secure: RTxdcwpmLFRqTOy/hjcs9Jspkbs9hNO7Jy1g/6Pur6PcPz2zqJ6kLsd+jr/3zdmkA/JcpzwKLscuMONwubEEDuqbKaxWL/1zB3nc9YB21EUrNB0P2Y02TzFk01XOfoZdvAUI+bEPrLmeRSEsgeAVh1EOgJIyma/GJijathn0iw1rDGQUpGwwlgjegisF8g/5eoQbIPBQfifF7mib/cjKLTUt5BVoU4pbTAa3rJ2fUyQs4yEOHX9Z0UoJddOuzr8oImbDbphEmzNpblyhLVpg0KIBgSko6Q5tWkJakTLsKFJPxgmWBDGSXecq2MsaUnS0Q9JeO0Eo+5OHR8yoNfqgF9Jc4UYJK+7eTK0fh+1ts8SpTktBueL14rA+J6MnpknaNblJmPcoEkl1kemG7mX/Pxmh/dg1wzfh+GKEH5ZFsxiTSmiA8SLIMjgCOQ3DIKzRCxG8FpGumomPsJ5MnbAGTVx7lwVbZALntwGewbY3KivXH838VUn1Rla/i5mguLJba0dGVW9oUp3ltGrEMyvXSYOtLbmtPChP5Ze1AYtFx7uh1m+k1G+tPEillAS5nT1GTpoKhA72ge4eZU3JkAbsrfSjMegT1bM7K4DnzwFbNIeLMLLqeDl2N7pSYEQO6l0YMM5ujO6mkRbcJszbDtt4HvKYingE6JxRH9sRMVEp+ec=
