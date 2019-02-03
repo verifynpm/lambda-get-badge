@@ -1,0 +1,35 @@
+{
+  "name": "lambda-get-badge",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Lambda function for handling badge requests",
+  "main": "./compiled/index.js",
+  "scripts": {
+    "prebuild": "npm run lint && rm -rf compiled/*",
+    "build": "tsc",
+    "copy-deps": "cp package*.json ./compiled && \\\ncd compiled && \\\nnpm ci --production && \\\nrm package*.json",
+    "lint": "tslint -c tslint.json -e 'node_modules/**/*' '**/*.ts'",
+    "start": "node ./compiled/db.js",
+    "integration": "NODE_ENV=test nyc mocha --require source-map-support/register --require ts-node/register --recursive './src/**/*.integration.ts'",
+    "test": "NODE_ENV=test nyc mocha --require source-map-support/register --require ts-node/register --recursive './src/**/*.tests.ts'",
+    "prezip": "npm run build -- --sourceMap false -d false && \\\nnpm run copy-deps",
+    "zip": "cd compiled && \\\nzip -r bundle.zip * -x *.tests.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.18",
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.21",
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
+    "prettier": "^1.16.3",
+    "source-map-support": "^0.5.10",
+    "ts-node": "^8.0.2",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.1"
+  }
+}
